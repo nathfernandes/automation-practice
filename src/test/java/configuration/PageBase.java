@@ -1,8 +1,10 @@
 package configuration;
 
+import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -11,6 +13,7 @@ import java.util.NoSuchElementException;
 public class PageBase {
     protected WebDriver driver;
     private WebDriverWait wait;
+    protected ExtentTest extentTest;
 
     public PageBase(WebDriver driver){
         this.driver = driver;
@@ -22,9 +25,18 @@ public class PageBase {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
     }
 
+    public void waitForElement(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
     public void click(By locator) {
         waitForElement(locator);
         driver.findElement(locator).click();
+    }
+
+    public void click(WebElement element){
+        waitForElement(element);
+        element.click();
     }
 
     public void fillString(By locator, String value){
