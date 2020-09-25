@@ -9,9 +9,10 @@ public class Product {
     private int quantity;
     private char size;
     private String color;
+    private String imageURL;
 
     public Product(String name, String sku, float currentPrice, int reduction, float oldPrice, int quantity,
-                   char size, String color) {
+                   char size, String color, String imageURL) {
         this.name = name;
         this.sku = sku;
         this.currentPrice = currentPrice;
@@ -20,6 +21,7 @@ public class Product {
         this.quantity = quantity;
         this.size = size;
         this.color = color;
+        this.imageURL = imageURL;
     }
 
     public String getName() {
@@ -84,5 +86,13 @@ public class Product {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

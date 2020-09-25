@@ -1,13 +1,13 @@
 package configuration;
 
 import com.aventstack.extentreports.ExtentTest;
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.CommonMethods;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class PageBase {
@@ -45,12 +45,19 @@ public class PageBase {
         driver.findElement(locator).sendKeys(value);
     }
 
-    public boolean isPresent(By locator){
-        try{
-            driver.findElement(locator);
-            return true;
-        }catch(NoSuchElementException e){
-            return false;
-        }
+    public void selectRandOption(By selectLocator){
+        WebElement element = driver.findElement(selectLocator);
+        Select select = new Select(element);
+        List<WebElement> options = select.getOptions();
+        select.selectByIndex(CommonMethods.randomNumber(0, options.size() - 1));
+    }
+
+    public boolean isDisplayed(By locator){
+        return driver.findElement(locator).isDisplayed();
+    }
+
+    public void scrollIntoView(By locator) {
+        WebElement element = driver.findElement(locator);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 }
