@@ -39,9 +39,8 @@ public class ProductDetails extends PageBase {
         return this;
     }
     public ProductDetails chooseSize(){
-        click(SizeCombo());
-        List<WebElement> options = driver.findElement(SizeCombo()).findElements(By.tagName("option"));
-        click(options.get(CommonMethods.randomNumber(0, options.size() - 1)));
+        scrollIntoView(SizeCombo());
+        selectRandOption(SizeCombo());
         return this;
     }
     public ProductDetails chooseColor(){
@@ -54,7 +53,7 @@ public class ProductDetails extends PageBase {
         int reduction = 0;
         float oldPrice = 0;
 
-        if(isPresent(ReductionLabel())){
+        if(isDisplayed(ReductionLabel())){
             reduction = Integer.parseInt(driver.findElement(ReductionLabel()).getText().substring(1)
                     .replace("%", ""));
             oldPrice = Float.parseFloat(driver.findElement(OldPriceLabel()).getText().replace("$", ""));
@@ -66,8 +65,8 @@ public class ProductDetails extends PageBase {
                 Float.parseFloat(driver.findElement(CurrentPriceLabel()).getText().replace("$", "")),
                 reduction,
                 oldPrice,
-                Integer.parseInt(driver.findElement(QuantityInput()).getText()),
-                driver.findElement(SizeCombo()).findElement(By.tagName("selected")).getText().charAt(0),
+                Integer.parseInt(driver.findElement(QuantityInput()).getAttribute("value")),
+                driver.findElement(SizeCombo()).findElement(By.cssSelector("[selected]")).getText().charAt(0),
                 driver.findElement(ColorList()).findElement(By.className("selected")).getAttribute("name")
         );
     }
