@@ -1,33 +1,47 @@
 package workflows;
 
-import com.aventstack.extentreports.ExtentTest;
 import configuration.PageBase;
 import org.openqa.selenium.WebDriver;
+import pages.ConfirmationCard.ConfirmationCard;
 import pages.Home.Home;
 import pages.ProductDetails.ProductDetails;
-import utils.CRUD.Product;
+import utils.CRUD.Cart;
 
 public class Workflow extends PageBase {
-    private Workflow(WebDriver driver) throws Exception {
+    private Cart cart;
+
+    private Workflow(WebDriver driver) {
         super(driver);
     }
 
-    public static Workflow of(WebDriver driver) throws Exception{
+    public static Workflow of(WebDriver driver) {
         return new Workflow(driver);
     }
 
     //region Flow
-    public void validateSuccessfulPurchase(){
+    public void validateProductAdded(){
         Home
                 .of(driver)
                 .chooseProductItem();
 
-        Product product = ProductDetails
+        cart = ProductDetails
                 .of(driver)
                 .enterQuantity()
                 .chooseSize()
                 .chooseColor()
-                .saveProductInfo();
+                .saveProductInfo()
+                .addToCart()
+                .cart;
+
+        ConfirmationCard
+                .of(driver)
+                .validateConfirmation()
+                .validateProductInformation(cart.getProducts().get(cart.getProducts().size() - 1))
+                .validateCartInformation(cart)
+                .clickProceedToCheckoutButton();
+    }
+    public void validateSuccessfulPurchase(){
+
     }
     //endregion
 }

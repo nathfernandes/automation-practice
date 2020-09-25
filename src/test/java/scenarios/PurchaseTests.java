@@ -9,9 +9,9 @@ public class PurchaseTests extends TestBase {
     public PurchaseTests() { super(DriverEnum.CHROME, "PurchaseTests"); }
 
     @Test
-    public void validateSuccessfulPurchase() throws Exception {
+    public void validateSuccessfulPurchase() {
         Workflow
                 .of(driver)
-                .validateSuccessfulPurchase();
+                .validateProductAdded();
     }
 }
