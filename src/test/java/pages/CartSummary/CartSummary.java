@@ -26,7 +26,8 @@ public class CartSummary extends PageBase {
     private By NameLabel() { return By.cssSelector(webElements.NAME_LABEL); }
     private By SkuLabel() { return By.cssSelector(webElements.SKU_LABEL); }
     private By ColorAndSizeLabel() { return By.cssSelector(webElements.COLOR_AND_SIZE_LABEL); }
-    private By QuantityInput() { return By.cssSelector(webElements.QUANTITY_INPUT); }
+    private By QuantityLabel() { return By.cssSelector(webElements.QUANTITY_LABEL); }
+    private By QuantityInput() { return By.cssSelector(webElements.QUANTITY_LABEL + " " + webElements.QUANTITY_INPUT); }
     private By ItemTotalPriceLabel() { return By.cssSelector(webElements.ITEM_TOTAL_PRICE_LABEL); }
     private By TotalPriceProductsLabel() { return By.cssSelector(webElements.TOTAL_PRICE_PRODUCTS_LABEL); }
     private By TotalShippingLabel() { return By.cssSelector(webElements.TOTAL_SHIPPING_LABEL); }
@@ -45,7 +46,9 @@ public class CartSummary extends PageBase {
                     new Product(
                             driver.findElements(NameLabel()).get(i).getText(),
                             driver.findElements(SkuLabel()).get(i).getText().split(": ")[1],
-                            Integer.parseInt(driver.findElements(QuantityInput()).get(i).getAttribute("value")),
+                           isPresent(QuantityInput()) ?
+                            Integer.parseInt(driver.findElements(QuantityInput()).get(i).getAttribute("value"))
+                            : Integer.parseInt(driver.findElements(QuantityLabel()).get(i).getText()),
                             colorSize[1].split(": ")[1].charAt(0),
                             colorSize[0].split(": ")[1],
                             driver.findElements(ProductImage()).get(i).getAttribute("src"),
@@ -56,19 +59,23 @@ public class CartSummary extends PageBase {
         }
         return this;
     }
-    public CartSummary validateCartInformation(Cart cart){
+    public CartSummary validateCartInformationWithTax(Cart cart){
         float totalWithoutTax = cart.getShipping() + cart.getCartTotal();
         float tax = Float.parseFloat(driver.findElement(TotalTaxLabel()).getText().replace("$",""));
 
-        Assert.assertEquals(driver.findElement(TotalPriceProductsLabel()).getText().replace("$",""),
-                String.format("%.02f", cart.getCartTotal()));
-        Assert.assertEquals(driver.findElement(TotalShippingLabel()).getText().replace("$",""),
-                String.format("%.02f", cart.getShipping()));
+        validateShippingAndProductsTotal(cart);
+
         Assert.assertEquals(driver.findElement(TotalPriceWithoutTaxLabel()).getText().replace("$",""),
                 String.format("%.02f", totalWithoutTax));
         Assert.assertEquals(driver.findElement(TotalFinalPrice()).getText().replace("$",""),
                 String.format("%.02f", totalWithoutTax + tax));
 
+        return this;
+    }
+    public CartSummary validateCartInformationWithoutTax(Cart cart){
+        validateShippingAndProductsTotal(cart);
+        Assert.assertEquals(driver.findElement(TotalFinalPrice()).getText().replace("$",""),
+                String.format("%.02f", cart.getCartTotal() + cart.getShipping()));
         return this;
     }
     public CartSummary clickProceedToCheckoutButton(){
@@ -85,6 +92,12 @@ public class CartSummary extends PageBase {
                 o.getSku().equals(cartProduct.getSku()) && o.getColor().equals(cartProduct.getColor()) &&
                 o.getSize() == cartProduct.getSize() && o.getQuantity() == cartProduct.getQuantity() &&
                 o.getTotalPrice() == cartProduct.getTotalPrice());
+    }
+    private void validateShippingAndProductsTotal(Cart cart){
+        Assert.assertEquals(driver.findElement(TotalPriceProductsLabel()).getText().replace("$",""),
+                String.format("%.02f", cart.getCartTotal()));
+        Assert.assertEquals(driver.findElement(TotalShippingLabel()).getText().replace("$",""),
+                String.format("%.02f", cart.getShipping()));
     }
     //endregion
 }

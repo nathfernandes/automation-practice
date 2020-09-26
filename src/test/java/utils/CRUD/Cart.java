@@ -7,6 +7,8 @@ public class Cart {
     private float shipping;
     private List<Product> products;
 
+    public Cart(){}
+
     public Cart(float cartTotal, List<Product> products) {
         this.cartTotal = cartTotal;
         this.products = products;
