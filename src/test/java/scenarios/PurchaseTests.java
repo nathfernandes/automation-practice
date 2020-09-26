@@ -12,6 +12,7 @@ public class PurchaseTests extends TestBase {
     public void validateSuccessfulPurchase() {
         Workflow
                 .of(driver)
-                .validateProductAdded();
+                .validateProductAdded()
+                .validateSuccessfulPurchase();
     }
 }

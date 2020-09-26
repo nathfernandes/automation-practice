@@ -2,6 +2,7 @@ package workflows;
 
 import configuration.PageBase;
 import org.openqa.selenium.WebDriver;
+import pages.CartSummary.CartSummary;
 import pages.ConfirmationCard.ConfirmationCard;
 import pages.Home.Home;
 import pages.ProductDetails.ProductDetails;
@@ -19,7 +20,7 @@ public class Workflow extends PageBase {
     }
 
     //region Flow
-    public void validateProductAdded(){
+    public Workflow validateProductAdded(){
         Home
                 .of(driver)
                 .chooseProductItem();
@@ -39,9 +40,15 @@ public class Workflow extends PageBase {
                 .validateProductInformation(cart.getProducts().get(cart.getProducts().size() - 1))
                 .validateCartInformation(cart)
                 .clickProceedToCheckoutButton();
+        return this;
     }
-    public void validateSuccessfulPurchase(){
-
+    public Workflow validateSuccessfulPurchase(){
+        CartSummary
+                .of(driver)
+                .validateProductInformation(cart)
+                .validateCartInformation(cart)
+                .clickProceedToCheckoutButton();
+        return this;
     }
     //endregion
 }
