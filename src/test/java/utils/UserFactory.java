@@ -13,7 +13,7 @@ public class UserFactory {
                 faker.internet().password(),
                 faker.address().fullAddress(),
                 faker.address().city(),
-                faker.address().zipCode(),
+                CommonMethods.randomNumAsString(5),
                 faker.phoneNumber().cellPhone()
         );
     }

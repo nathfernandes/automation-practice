@@ -6,7 +6,10 @@ import pages.Address.Address;
 import pages.CartSummary.CartSummary;
 import pages.ConfirmationCard.ConfirmationCard;
 import pages.Home.Home;
+import pages.MenuLoggedIn.MenuLoggedIn;
+import pages.Payment.Payment;
 import pages.ProductDetails.ProductDetails;
+import pages.Shipping.Shipping;
 import pages.SignIn.SignIn;
 import utils.CRUD.Cart;
 import utils.CRUD.User;
@@ -16,6 +19,7 @@ public class Workflow extends PageBase {
 
     private Workflow(WebDriver driver) {
         super(driver);
+        cart = new Cart();
     }
 
     public static Workflow of(WebDriver driver) {
@@ -23,7 +27,7 @@ public class Workflow extends PageBase {
     }
 
     //region Flow
-    public Workflow validateProductAdded(){
+    public Workflow validateProductAdded() throws InterruptedException {
         Home.of(driver)
                 .chooseProductItem();
         cart = ProductDetails.of(driver)
@@ -40,10 +44,9 @@ public class Workflow extends PageBase {
                 .clickProceedToCheckoutButton();
         return this;
     }
-    public Workflow validateSuccessfulPurchase(User user){
-        CartSummary.of(driver)
-                .validateProductInformation(cart)
-                .validateCartInformation(cart)
+    public Workflow validateSuccessfulPurchase(User user) throws InterruptedException {
+        validateProductInformation()
+                .validateCartInformationWithTax(cart)
                 .clickProceedToCheckoutButton();
         SignIn.of(driver)
                 .fillEmailInput(user)
@@ -53,7 +56,25 @@ public class Workflow extends PageBase {
         Address.of(driver)
                 .validateAddressInformation(user)
                 .clickProceedToCheckoutButton();
+        Shipping.of(driver)
+                .validateShippingPrice(cart)
+                .acceptTermsOfService()
+                .clickProceedToCheckoutButton();
+        validateProductInformation().validateCartInformationWithoutTax(cart);
+        Payment.of(driver)
+                .choosePaymentMethod()
+                .clickConfirmOrderButton()
+                .validateOrderConfirmation();
+        MenuLoggedIn.of(driver)
+                .clickLogoutButton();
         return this;
+    }
+    //endregion
+
+    //region Commons
+    private CartSummary validateProductInformation(){
+        return CartSummary.of(driver)
+                .validateProductInformation(cart);
     }
     //endregion
 }

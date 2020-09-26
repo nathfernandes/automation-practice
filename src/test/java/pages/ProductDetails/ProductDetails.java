@@ -46,15 +46,17 @@ public class ProductDetails extends PageBase {
         fillString(QuantityInput(), String.valueOf(CommonMethods.randomNumber(1, 5)));
         return this;
     }
-    public ProductDetails chooseSize(){
+    public ProductDetails chooseSize() throws InterruptedException {
         scrollIntoView(SizeCombo());
-        selectRandOption(SizeCombo());
+        selectRandOption(SizeCombo(), false);
         return this;
     }
     public ProductDetails chooseColor(){
         waitForElement(ColorList());
         List<WebElement> colors = driver.findElement(ColorList()).findElements(ColorOptions());
-        click(colors.get(CommonMethods.randomNumber(0, colors.size() - 1)));
+        int index = CommonMethods.randomNumber(0, colors.size() - 1);
+        click(colors.get(index));
+        waitForAttributeToBe(colors.get(index), "class", "selected");
         return this;
     }
     public ProductDetails saveProductInfo(){
@@ -99,7 +101,7 @@ public class ProductDetails extends PageBase {
     private void updateCart(){
         List<Product> products;
         if(cart == null){
-            products = new ArrayList<Product>();
+            products = new ArrayList<>();
             cart = new Cart(products);
         }else{
             products = cart.getProducts();

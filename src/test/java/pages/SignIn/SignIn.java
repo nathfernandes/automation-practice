@@ -43,15 +43,15 @@ public class SignIn extends PageBase {
         click(CreateAccountButton());
         return this;
     }
-    public SignIn fillCreateAccountForm(User user){
+    public SignIn fillCreateAccountForm(User user) throws InterruptedException {
         fillString(FirstNameInput(), user.getFirstName());
         fillString(LastNameInput(), user.getLastName());
         fillString(PasswordInput(), user.getPassword());
         fillString(AddressInput(), user.getAddress());
         fillString(CityInput(), user.getCity());
-        selectRandOption(StateCombo());
+        selectRandOption(StateCombo(), true);
         fillString(PostalCodeInput(), user.getPostalCode());
-        selectRandOption(CountryCombo());
+        selectRandOption(CountryCombo(), true);
         fillString(MobilePhoneInput(), user.getMobilePhone());
 
         user.setState(driver.findElement(SelectedStateLabel()).getText());
