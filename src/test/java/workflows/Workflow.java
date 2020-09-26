@@ -6,7 +6,9 @@ import pages.CartSummary.CartSummary;
 import pages.ConfirmationCard.ConfirmationCard;
 import pages.Home.Home;
 import pages.ProductDetails.ProductDetails;
+import pages.SignIn.SignIn;
 import utils.CRUD.Cart;
+import utils.CRUD.User;
 
 public class Workflow extends PageBase {
     private Cart cart;
@@ -24,7 +26,6 @@ public class Workflow extends PageBase {
         Home
                 .of(driver)
                 .chooseProductItem();
-
         cart = ProductDetails
                 .of(driver)
                 .enterQuantity()
@@ -33,7 +34,6 @@ public class Workflow extends PageBase {
                 .saveProductInfo()
                 .addToCart()
                 .cart;
-
         ConfirmationCard
                 .of(driver)
                 .validateConfirmation()
@@ -42,12 +42,18 @@ public class Workflow extends PageBase {
                 .clickProceedToCheckoutButton();
         return this;
     }
-    public Workflow validateSuccessfulPurchase(){
+    public Workflow validateSuccessfulPurchase(User user){
         CartSummary
                 .of(driver)
                 .validateProductInformation(cart)
                 .validateCartInformation(cart)
                 .clickProceedToCheckoutButton();
+        SignIn
+                .of(driver)
+                .fillEmailInput(user)
+                .clickCreateAnAccountButton()
+                .fillCreateAccountForm(user)
+                .clickRegisterButton();
         return this;
     }
     //endregion
