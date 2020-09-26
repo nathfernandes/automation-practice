@@ -48,7 +48,7 @@ public class ConfirmationCard extends PageBase {
         Assert.assertEquals(driver.findElement(ProductImage()).getAttribute("src"), product.getImageURL()
                 .replace("large", "home"));
         Assert.assertEquals(driver.findElement(TotalCurrentPriceLabel()).getText().replace("$", ""),
-                String.format("%.02f", product.getQuantity() * product.getCurrentPrice()));
+                String.format("%.02f", product.getTotalPrice()));
 
         return this;
     }

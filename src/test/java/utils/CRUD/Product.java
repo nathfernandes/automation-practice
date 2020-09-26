@@ -10,6 +10,7 @@ public class Product {
     private char size;
     private String color;
     private String imageURL;
+    private float totalPrice;
 
     public Product(String name, String sku, float currentPrice, int reduction, float oldPrice, int quantity,
                    char size, String color, String imageURL) {
@@ -22,6 +23,16 @@ public class Product {
         this.size = size;
         this.color = color;
         this.imageURL = imageURL;
+    }
+
+    public Product(String name, String sku, int quantity, char size, String color, String imageURL, float totalPrice){
+        this.name = name;
+        this.sku = sku;
+        this.quantity = quantity;
+        this.size = size;
+        this.color = color;
+        this.imageURL = imageURL;
+        this.totalPrice = totalPrice;
     }
 
     public String getName() {
@@ -94,5 +105,13 @@ public class Product {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

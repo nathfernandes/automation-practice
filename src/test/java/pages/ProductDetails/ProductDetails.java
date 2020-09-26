@@ -80,6 +80,8 @@ public class ProductDetails extends PageBase {
                 driver.findElement(ColorList()).findElement(ColorPicked()).getAttribute("name"),
                 driver.findElement(ProductImage()).getAttribute("src")
         );
+        product.setTotalPrice(product.getQuantity() * product.getCurrentPrice());
+
         return this;
     }
     public ProductDetails addToCart(){
@@ -102,7 +104,7 @@ public class ProductDetails extends PageBase {
         }else{
             products = cart.getProducts();
         }
-        cart.setCartTotal(cart.getCartTotal() + product.getCurrentPrice() * product.getQuantity());
+        cart.setCartTotal(cart.getCartTotal() + product.getTotalPrice());
         products.add(product);
         cart.setProducts(products);
     }
