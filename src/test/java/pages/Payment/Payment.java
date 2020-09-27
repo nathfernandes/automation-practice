@@ -37,7 +37,7 @@ public class Payment extends PageBase {
         return this;
     }
     public Payment validateOrderConfirmation(){
-        Assert.assertEquals(driver.findElement(ConfirmationMessage()).getText(),
+        assertEquals(ConfirmationMessage(), driver.findElement(ConfirmationMessage()).getText(),
                 "Your order on My Store is complete.");
         return this;
     }

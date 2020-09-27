@@ -29,15 +29,16 @@ public class Address extends PageBase {
     //region Actions
     public Address validateAddressInformation(User user){
         waitForElement(FullNameLabel());
-        Assert.assertEquals(driver.findElement(FullNameLabel()).getText().toUpperCase(),
+        assertEquals(FullNameLabel(), driver.findElement(FullNameLabel()).getText().toUpperCase(),
                 (user.getFirstName() + " " + user.getLastName()).toUpperCase());
-        Assert.assertEquals(driver.findElement(AddressLabel()).getText().toUpperCase(),
+        assertEquals(AddressLabel(), driver.findElement(AddressLabel()).getText().toUpperCase(),
                 user.getAddress().toUpperCase());
-        Assert.assertEquals(driver.findElement(CityStateZipLabel()).getText().toUpperCase(),
+        assertEquals(CityStateZipLabel(), driver.findElement(CityStateZipLabel()).getText().toUpperCase(),
                 (user.getCity() + ", " + user.getState() + " " + user.getPostalCode()).toUpperCase());
-        Assert.assertEquals(driver.findElement(CountryLabel()).getText().toUpperCase(),
+        assertEquals(CountryLabel(), driver.findElement(CountryLabel()).getText().toUpperCase(),
                 user.getCountry().toUpperCase());
-        Assert.assertEquals(driver.findElement(MobilePhoneLabel()).getText(), user.getMobilePhone());
+        assertEquals(MobilePhoneLabel(), driver.findElement(MobilePhoneLabel()).getText(),
+                user.getMobilePhone());
         return this;
     }
     public Address clickProceedToCheckoutButton(){

@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import utils.CommonMethods;
 
 import java.util.List;
@@ -91,5 +92,27 @@ public class PageBase {
 
     public void highlightElement(WebElement element){
         ((JavascriptExecutor)driver).executeScript("arguments[0].style.border='3px solid red'", element);
+    }
+
+    public void assertEquals(By locator, String actual, String expected){
+        WebElement element = driver.findElement(locator);
+        try{
+            Assert.assertEquals(actual, expected);
+        }catch(AssertionError e){
+            scrollIntoView(locator);
+            highlightElement(element);
+            throw e;
+        }
+    }
+
+    public void assertTrue(By elementToHighlight, boolean condition){
+        WebElement element = driver.findElement(elementToHighlight);
+        try{
+            Assert.assertTrue(condition);
+        }catch(AssertionError e){
+            scrollIntoView(elementToHighlight);
+            highlightElement(element);
+            throw e;
+        }
     }
 }

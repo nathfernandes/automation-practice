@@ -14,4 +14,5 @@ public class ProductDetailsElements {
     public static final String COLOR_PICKED = ".color_pick.selected";
     public static final String PRODUCT_IMAGE = "#bigpic";
     public static final String ADD_TO_CART_BUTTON = "#add_to_cart button";
+    public static final String PRICES_BOX = ".box-info-product .price";
 }

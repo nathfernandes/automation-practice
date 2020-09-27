@@ -34,6 +34,7 @@ public class CartSummary extends PageBase {
     private By TotalTaxLabel() { return By.cssSelector(webElements.TOTAL_TAX_LABEL); }
     private By TotalFinalPrice() { return By.cssSelector(webElements.TOTAL_FINAL_PRICE); }
     private By ProceedToCheckoutButton() { return By.cssSelector(webElements.PROCEED_TO_CHECKOUT_BUTTON); }
+    private By ProductInfoBox() { return By.cssSelector(webElements.PRODUCT_INFO_BOX); }
     //endregion
 
     //region Actions
@@ -41,13 +42,13 @@ public class CartSummary extends PageBase {
         waitForElement(ProductImage());
         for(int i = 0; i < cart.getProducts().size(); i++){
             String[] colorSize = driver.findElements(ColorAndSizeLabel()).get(i).getText().split(", ");
-            Assert.assertTrue(cartContainsAddedItems(cart.getProducts(),
+            assertTrue(ProductInfoBox(), cartContainsAddedItems(cart.getProducts(),
                     new Product(
                             driver.findElements(NameLabel()).get(i).getText(),
                             driver.findElements(SkuLabel()).get(i).getText().split(": ")[1],
-                           isPresent(QuantityInput()) ?
-                            Integer.parseInt(driver.findElements(QuantityInput()).get(i).getAttribute("value"))
-                            : Integer.parseInt(driver.findElements(QuantityLabel()).get(i).getText()),
+                            isPresent(QuantityInput()) ?
+                                    Integer.parseInt(driver.findElements(QuantityInput()).get(i).getAttribute("value"))
+                                    : Integer.parseInt(driver.findElements(QuantityLabel()).get(i).getText()),
                             colorSize[1].split(": ")[1].charAt(0),
                             colorSize[0].split(": ")[1],
                             driver.findElements(ProductImage()).get(i).getAttribute("src"),
@@ -64,17 +65,17 @@ public class CartSummary extends PageBase {
 
         validateShippingAndProductsTotal(cart);
 
-        Assert.assertEquals(driver.findElement(TotalPriceWithoutTaxLabel()).getText().replace("$",""),
-                String.format("%.02f", totalWithoutTax));
-        Assert.assertEquals(driver.findElement(TotalFinalPrice()).getText().replace("$",""),
-                String.format("%.02f", totalWithoutTax + tax));
+        assertEquals(TotalPriceWithoutTaxLabel(), driver.findElement(TotalPriceWithoutTaxLabel()).getText()
+                .replace("$",""), String.format("%.02f", totalWithoutTax));
+        assertEquals(TotalFinalPrice(), driver.findElement(TotalFinalPrice()).getText()
+                .replace("$",""), String.format("%.02f", totalWithoutTax + tax));
 
         return this;
     }
     public CartSummary validateCartInformationWithoutTax(Cart cart){
         validateShippingAndProductsTotal(cart);
-        Assert.assertEquals(driver.findElement(TotalFinalPrice()).getText().replace("$",""),
-                String.format("%.02f", cart.getCartTotal() + cart.getShipping()));
+        assertEquals(TotalFinalPrice(), driver.findElement(TotalFinalPrice()).getText()
+                .replace("$",""), String.format("%.02f", cart.getCartTotal() + cart.getShipping()));
         return this;
     }
     public CartSummary clickProceedToCheckoutButton(){
@@ -93,10 +94,10 @@ public class CartSummary extends PageBase {
                 o.getTotalPrice() == cartProduct.getTotalPrice());
     }
     private void validateShippingAndProductsTotal(Cart cart){
-        Assert.assertEquals(driver.findElement(TotalPriceProductsLabel()).getText().replace("$",""),
-                String.format("%.02f", cart.getCartTotal()));
-        Assert.assertEquals(driver.findElement(TotalShippingLabel()).getText().replace("$",""),
-                String.format("%.02f", cart.getShipping()));
+        assertEquals(TotalPriceProductsLabel(), driver.findElement(TotalPriceProductsLabel()).getText()
+                .replace("$",""), String.format("%.02f", cart.getCartTotal()));
+        assertEquals(TotalShippingLabel(), driver.findElement(TotalShippingLabel()).getText()
+                .replace("$",""), String.format("%.02f", cart.getShipping()));
     }
     //endregion
 }
