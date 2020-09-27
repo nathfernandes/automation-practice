@@ -13,6 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import utils.DateTimeFormatter;
 import utils.Screenshot;
 
 import java.io.IOException;
@@ -24,11 +25,13 @@ public class TestBase {
     private ExtentReports extentReports;
     private ExtentSparkReporter extentSparkReporter;
     protected ExtentTest extentTest;
+    private String timestamp;
 
     public TestBase(DriverEnum browser, String test){
         this.browser = browser;
-
-        this.extentSparkReporter = new ExtentSparkReporter(ProjectConstants.REPORT_PATH + test + "_Report.html");
+        this.timestamp = DateTimeFormatter.timestamp();
+        this.extentSparkReporter = new ExtentSparkReporter(ProjectConstants.REPORT_PATH + "/" +
+                timestamp + "/" + test + " " + "_Report.html");
         this.extentReports = new ExtentReports();
         this.extentReports.attachReporter(extentSparkReporter);
     }
@@ -48,7 +51,7 @@ public class TestBase {
     @AfterMethod
     public void getResult(ITestResult result) throws IOException {
         if(result.getStatus() == ITestResult.FAILURE){
-            Screenshot.of(this.driver).with(extentTest).takeScreenshot();
+            Screenshot.of(this.driver).with(extentTest).takeScreenshot(timestamp);
             extentTest.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " FAILED ", ExtentColor.RED));
             extentTest.fail(result.getThrowable());
         }else if(result.getStatus() == ITestResult.SUCCESS){

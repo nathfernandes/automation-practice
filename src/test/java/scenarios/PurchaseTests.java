@@ -11,7 +11,7 @@ public class PurchaseTests extends TestBase {
     public PurchaseTests() { super(DriverEnum.CHROME, "PurchaseTests"); }
 
     @Test
-    public void validateSuccessfulPurchase() throws InterruptedException {
+    public void validateSuccessfulPurchase() {
         User user = UserFactory.createNewUser();
         Workflow
                 .of(driver)
