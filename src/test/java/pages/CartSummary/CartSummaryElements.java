@@ -14,4 +14,5 @@ public class CartSummaryElements {
     public static final String TOTAL_TAX_LABEL = "#total_tax";
     public static final String TOTAL_FINAL_PRICE = "#total_price";
     public static final String PROCEED_TO_CHECKOUT_BUTTON = ".cart_navigation a.button[title='Proceed to checkout']";
+    public static final String PRODUCT_INFO_BOX = "#cart_summary tbody";
 }

@@ -34,33 +34,35 @@ public class ConfirmationCard extends PageBase {
     //region Actions
     public ConfirmationCard validateConfirmation(){
         waitForElement(ConfirmationMessage());
-        Assert.assertEquals(driver.findElement(ConfirmationMessage()).getText(),
+        assertEquals(ConfirmationMessage(), driver.findElement(ConfirmationMessage()).getText(),
                 "Product successfully added to your shopping cart");
         return this;
     }
     public ConfirmationCard validateProductInformation(Product product){
         String[] colorSize = driver.findElement(ColorAndSizeLabel()).getText().split(", ");
 
-        Assert.assertEquals(driver.findElement(NameLabel()).getText().toUpperCase(), product.getName().toUpperCase());
-        Assert.assertEquals(colorSize[0], product.getColor());
-        Assert.assertEquals(colorSize[1].charAt(0), product.getSize());
-        Assert.assertEquals(Integer.parseInt(driver.findElement(QuantityLabel()).getText()), product.getQuantity());
-        Assert.assertEquals(driver.findElement(ProductImage()).getAttribute("src"), product.getImageURL()
-                .replace("large", "home"));
-        Assert.assertEquals(driver.findElement(TotalCurrentPriceLabel()).getText().replace("$", ""),
-                String.format("%.02f", product.getTotalPrice()));
+        assertEquals(NameLabel(), driver.findElement(NameLabel()).getText().toUpperCase(),
+                product.getName().toUpperCase());
+        assertEquals(ColorAndSizeLabel(), colorSize[0], product.getColor());
+        assertEquals(ColorAndSizeLabel(), colorSize[1], String.valueOf(product.getSize()));
+        assertEquals(QuantityLabel(), driver.findElement(QuantityLabel()).getText(),
+                String.valueOf(product.getQuantity()));
+        assertEquals(ProductImage(), driver.findElement(ProductImage()).getAttribute("src"),
+                product.getImageURL().replace("large", "home"));
+        assertEquals(TotalCurrentPriceLabel(), driver.findElement(TotalCurrentPriceLabel()).getText()
+                .replace("$", ""), String.format("%.02f", product.getTotalPrice()));
 
         return this;
     }
     public ConfirmationCard validateCartInformation(Cart cart){
         cart.setShipping(Float.parseFloat(driver.findElement(ShippingLabel()).getText().replace("$",
                 "")));
-        Assert.assertEquals(driver.findElement(CartTotalProductsPriceLabel()).getText().replace("$", ""),
-                String.format("%.02f", cart.getCartTotal()));
-        Assert.assertEquals(driver.findElement(ShippingLabel()).getText().replace("$", ""),
+        assertEquals(CartTotalProductsPriceLabel(), driver.findElement(CartTotalProductsPriceLabel()).getText()
+                .replace("$", ""), String.format("%.02f", cart.getCartTotal()));
+        assertEquals(ShippingLabel(), driver.findElement(ShippingLabel()).getText().replace("$", ""),
                 String.format("%.02f", cart.getShipping()));
-        Assert.assertEquals(driver.findElement(CartTotalPriceLabel()).getText().replace("$", ""),
-                String.format("%.02f", cart.getCartTotal() + cart.getShipping()));
+        assertEquals(CartTotalPriceLabel(), driver.findElement(CartTotalPriceLabel()).getText()
+                .replace("$", ""), String.format("%.02f", cart.getCartTotal() + cart.getShipping()));
 
         return this;
     }

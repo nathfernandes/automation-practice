@@ -39,6 +39,7 @@ public class ProductDetails extends PageBase {
     private By ColorPicked() { return By.cssSelector(webElements.COLOR_PICKED); }
     private By ProductImage() { return By.cssSelector(webElements.PRODUCT_IMAGE); }
     private By AddToCartButton() { return By.cssSelector(webElements.ADD_TO_CART_BUTTON); }
+    private By PricesBox() { return By.cssSelector(webElements.PRICES_BOX); }
     //endregion
 
     //region Actions
@@ -96,7 +97,7 @@ public class ProductDetails extends PageBase {
     //region Helpers
     private void validateReductionOnPrice(int reduction, float oldPrice, String currentPrice){
         float expected = oldPrice - (oldPrice * reduction / 100);
-        Assert.assertEquals(String.format("%.02f", expected), currentPrice);
+        assertEquals(PricesBox(), String.format("%.02f", expected), currentPrice);
     }
     private void updateCart(){
         List<Product> products;

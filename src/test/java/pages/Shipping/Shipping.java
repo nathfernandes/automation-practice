@@ -26,8 +26,8 @@ public class Shipping extends PageBase {
     //region Actions
     public Shipping validateShippingPrice(Cart cart){
         waitForElement(ShippingPriceLabel());
-        Assert.assertEquals(driver.findElement(ShippingPriceLabel()).getText().replace("$", ""),
-                String.format("%.02f", cart.getShipping()));
+        assertEquals(ShippingPriceLabel(), driver.findElement(ShippingPriceLabel()).getText()
+                .replace("$", ""), String.format("%.02f", cart.getShipping()));
         return this;
     }
     public Shipping acceptTermsOfService(){
