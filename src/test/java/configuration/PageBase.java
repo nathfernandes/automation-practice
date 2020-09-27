@@ -33,21 +33,25 @@ public class PageBase {
 
     public void click(By locator) {
         waitForElement(locator);
+        highlightElement(locator);
         driver.findElement(locator).click();
     }
 
     public void click(WebElement element){
         waitForElement(element);
+        highlightElement(element);
         element.click();
     }
 
     public void jsClick(By locator){
         WebElement element = driver.findElement(locator);
+        highlightElement(locator);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
 
     public void fillString(By locator, String value){
         waitForElement(locator);
+        highlightElement(locator);
         driver.findElement(locator).clear();
         driver.findElement(locator).sendKeys(value);
     }
@@ -55,6 +59,7 @@ public class PageBase {
     public void selectRandOption(By selectLocator, boolean ignoreFirst) {
         int start = ignoreFirst ? 1 : 0;
         WebElement element = driver.findElement(selectLocator);
+        highlightElement(element);
         Select select = new Select(element);
         List<WebElement> options = select.getOptions();
         select.selectByIndex(CommonMethods.randomNumber(start, options.size() - 1));
@@ -75,6 +80,16 @@ public class PageBase {
 
     public void scrollIntoView(By locator) {
         WebElement element = driver.findElement(locator);
+        highlightElement(element);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
+    public void highlightElement(By locator){
+        WebElement element = driver.findElement(locator);
+        highlightElement(element);
+    }
+
+    public void highlightElement(WebElement element){
+        ((JavascriptExecutor)driver).executeScript("arguments[0].style.border='3px solid red'", element);
     }
 }
