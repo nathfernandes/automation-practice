@@ -7,7 +7,6 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.testng.ITestResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,11 +30,11 @@ public class Screenshot {
         return this;
     }
 
-    public void takeScreenshot() throws IOException {
+    public void takeScreenshot(String timestamp) throws IOException {
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         String fileName = UUID.randomUUID().toString() + ".png";
 
-        File targetFile = new File(ProjectConstants.REPORT_PATH, fileName);
+        File targetFile = new File(ProjectConstants.REPORT_PATH + "/" + timestamp, fileName);
         FileUtils.copyFile(scrFile, targetFile);
 
         if(extentTest != null){

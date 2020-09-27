@@ -46,7 +46,7 @@ public class ProductDetails extends PageBase {
         fillString(QuantityInput(), String.valueOf(CommonMethods.randomNumber(1, 5)));
         return this;
     }
-    public ProductDetails chooseSize() throws InterruptedException {
+    public ProductDetails chooseSize() {
         scrollIntoView(SizeCombo());
         selectRandOption(SizeCombo(), false);
         return this;

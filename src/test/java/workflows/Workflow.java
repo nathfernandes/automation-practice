@@ -27,7 +27,7 @@ public class Workflow extends PageBase {
     }
 
     //region Flow
-    public Workflow validateProductAdded() throws InterruptedException {
+    public Workflow validateProductAdded() {
         Home.of(driver)
                 .chooseProductItem();
         cart = ProductDetails.of(driver)
@@ -44,7 +44,7 @@ public class Workflow extends PageBase {
                 .clickProceedToCheckoutButton();
         return this;
     }
-    public Workflow validateSuccessfulPurchase(User user) throws InterruptedException {
+    public Workflow validateSuccessfulPurchase(User user) {
         validateProductInformation()
                 .validateCartInformationWithTax(cart)
                 .clickProceedToCheckoutButton();

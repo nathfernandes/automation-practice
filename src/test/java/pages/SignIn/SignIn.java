@@ -1,6 +1,5 @@
 package pages.SignIn;
 
-import com.github.javafaker.Faker;
 import configuration.PageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -43,7 +42,7 @@ public class SignIn extends PageBase {
         click(CreateAccountButton());
         return this;
     }
-    public SignIn fillCreateAccountForm(User user) throws InterruptedException {
+    public SignIn fillCreateAccountForm(User user) {
         fillString(FirstNameInput(), user.getFirstName());
         fillString(LastNameInput(), user.getLastName());
         fillString(PasswordInput(), user.getPassword());

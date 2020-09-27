@@ -8,12 +8,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.CommonMethods;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class PageBase {
     protected WebDriver driver;
     private WebDriverWait wait;
-    protected ExtentTest extentTest;
 
     public PageBase(WebDriver driver){
         this.driver = driver;
@@ -54,7 +52,7 @@ public class PageBase {
         driver.findElement(locator).sendKeys(value);
     }
 
-    public void selectRandOption(By selectLocator, boolean ignoreFirst) throws InterruptedException {
+    public void selectRandOption(By selectLocator, boolean ignoreFirst) {
         int start = ignoreFirst ? 1 : 0;
         WebElement element = driver.findElement(selectLocator);
         Select select = new Select(element);

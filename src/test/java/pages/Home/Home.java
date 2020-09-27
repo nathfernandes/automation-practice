@@ -1,6 +1,5 @@
 package pages.Home;
 
-import com.aventstack.extentreports.ExtentTest;
 import configuration.PageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

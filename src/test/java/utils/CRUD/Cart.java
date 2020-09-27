@@ -9,11 +9,6 @@ public class Cart {
 
     public Cart(){}
 
-    public Cart(float cartTotal, List<Product> products) {
-        this.cartTotal = cartTotal;
-        this.products = products;
-    }
-
     public Cart(List<Product> products){
         this.products = products;
     }
