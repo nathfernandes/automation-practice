@@ -11,6 +11,7 @@ import utils.CommonMethods;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductDetails extends PageBase {
     private ProductDetailsElements webElements;
@@ -97,7 +98,7 @@ public class ProductDetails extends PageBase {
     //region Helpers
     private void validateReductionOnPrice(int reduction, float oldPrice, String currentPrice){
         float expected = oldPrice - (oldPrice * reduction / 100);
-        assertEquals(PricesBox(), String.format("%.02f", expected), currentPrice);
+        assertEquals(PricesBox(), String.format(Locale.ROOT, "%.02f", expected), currentPrice);
     }
     private void updateCart(){
         List<Product> products;
