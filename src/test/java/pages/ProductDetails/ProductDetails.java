@@ -99,7 +99,7 @@ public class ProductDetails extends PageBase {
     private void validateReductionOnPrice(int reduction, float oldPrice, String currentPrice){
         float expected = oldPrice - (oldPrice * reduction / 100);
         assertEquals(PricesBox(), String.format("%.02f", expected).replaceAll(",","."),
-                currentPrice);
+                currentPrice.replaceAll(",","."));
     }
     private void updateCart(){
         List<Product> products;
