@@ -52,7 +52,8 @@ public class ConfirmationCard extends PageBase {
         assertEquals(ProductImage(), driver.findElement(ProductImage()).getAttribute("src"),
                 product.getImageURL().replace("large", "home"));
         assertEquals(TotalCurrentPriceLabel(), driver.findElement(TotalCurrentPriceLabel()).getText()
-                .replace("$", ""), String.format(Locale.ROOT, "%.02f", product.getTotalPrice()));
+                .replace("$", ""), String.format("%.02f", product.getTotalPrice())
+                .replaceAll(",","."));
 
         return this;
     }
@@ -60,11 +61,13 @@ public class ConfirmationCard extends PageBase {
         cart.setShipping(Float.parseFloat(driver.findElement(ShippingLabel()).getText().replace("$",
                 "")));
         assertEquals(CartTotalProductsPriceLabel(), driver.findElement(CartTotalProductsPriceLabel()).getText()
-                .replace("$", ""), String.format("%.02f", cart.getCartTotal()));
+                .replace("$", ""), String.format("%.02f", cart.getCartTotal())
+                .replaceAll(",","."));
         assertEquals(ShippingLabel(), driver.findElement(ShippingLabel()).getText().replace("$", ""),
-                String.format("%.02f", cart.getShipping()));
+                String.format("%.02f", cart.getShipping()).replaceAll(",","."));
         assertEquals(CartTotalPriceLabel(), driver.findElement(CartTotalPriceLabel()).getText()
-                .replace("$", ""), String.format("%.02f", cart.getCartTotal() + cart.getShipping()));
+                .replace("$", ""), String.format("%.02f", cart.getCartTotal() + cart.getShipping())
+                .replaceAll(",","."));
 
         return this;
     }
