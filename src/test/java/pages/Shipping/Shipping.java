@@ -27,7 +27,8 @@ public class Shipping extends PageBase {
     public Shipping validateShippingPrice(Cart cart){
         waitForElement(ShippingPriceLabel());
         assertEquals(ShippingPriceLabel(), driver.findElement(ShippingPriceLabel()).getText()
-                .replace("$", ""), String.format("%.02f", cart.getShipping()));
+                .replace("$", ""), String.format("%.02f", cart.getShipping())
+                .replaceAll(",","."));
         return this;
     }
     public Shipping acceptTermsOfService(){

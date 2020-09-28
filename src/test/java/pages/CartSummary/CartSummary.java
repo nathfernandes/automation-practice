@@ -66,16 +66,19 @@ public class CartSummary extends PageBase {
         validateShippingAndProductsTotal(cart);
 
         assertEquals(TotalPriceWithoutTaxLabel(), driver.findElement(TotalPriceWithoutTaxLabel()).getText()
-                .replace("$",""), String.format("%.02f", totalWithoutTax));
+                .replace("$",""), String.format("%.02f", totalWithoutTax)
+                .replaceAll(",","."));
         assertEquals(TotalFinalPrice(), driver.findElement(TotalFinalPrice()).getText()
-                .replace("$",""), String.format("%.02f", totalWithoutTax + tax));
+                .replace("$",""), String.format("%.02f", totalWithoutTax + tax)
+                .replaceAll(",","."));
 
         return this;
     }
     public CartSummary validateCartInformationWithoutTax(Cart cart){
         validateShippingAndProductsTotal(cart);
         assertEquals(TotalFinalPrice(), driver.findElement(TotalFinalPrice()).getText()
-                .replace("$",""), String.format("%.02f", cart.getCartTotal() + cart.getShipping()));
+                .replace("$",""), String.format("%.02f", cart.getCartTotal() + cart.getShipping())
+                .replaceAll(",","."));
         return this;
     }
     public CartSummary clickProceedToCheckoutButton(){
@@ -95,9 +98,11 @@ public class CartSummary extends PageBase {
     }
     private void validateShippingAndProductsTotal(Cart cart){
         assertEquals(TotalPriceProductsLabel(), driver.findElement(TotalPriceProductsLabel()).getText()
-                .replace("$",""), String.format("%.02f", cart.getCartTotal()));
+                .replace("$",""), String.format("%.02f", cart.getCartTotal())
+                .replaceAll(",","."));
         assertEquals(TotalShippingLabel(), driver.findElement(TotalShippingLabel()).getText()
-                .replace("$",""), String.format("%.02f", cart.getShipping()));
+                .replace("$",""), String.format("%.02f", cart.getShipping())
+                .replaceAll(",","."));
     }
     //endregion
 }
