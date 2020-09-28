@@ -12,6 +12,7 @@ public enum DriverEnum {
             WebDriverManager.chromedriver().setup();
             ChromeOptions copts = new ChromeOptions();
             copts.addArguments("--disable-site-isolation-trials");
+            copts.addArguments("--lang=en-US");
             return new ChromeDriver(copts);
         }
     };
