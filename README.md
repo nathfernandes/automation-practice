@@ -1,7 +1,7 @@
 # automation-practice
 End-to-end test automation project using `Java`, `Selenium` and `TestNG`.
 
-Test case: Purchase a random product with random quantity, size and color successfully as a new user, creatinga random new account.
+Test case: Purchase a random product with random quantity, size and color successfully as a new user, creating a random new account.
 
 # Additional libraries
 Besides `Selenium` and `TestNG`, this project also uses additional libraries, such as:
