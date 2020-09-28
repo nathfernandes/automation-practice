@@ -7,6 +7,8 @@ import org.testng.Assert;
 import utils.CRUD.Cart;
 import utils.CRUD.Product;
 
+import java.util.Locale;
+
 public class ConfirmationCard extends PageBase {
     private ConfirmationCardElements webElements;
 
@@ -50,7 +52,7 @@ public class ConfirmationCard extends PageBase {
         assertEquals(ProductImage(), driver.findElement(ProductImage()).getAttribute("src"),
                 product.getImageURL().replace("large", "home"));
         assertEquals(TotalCurrentPriceLabel(), driver.findElement(TotalCurrentPriceLabel()).getText()
-                .replace("$", ""), String.format("%.02f", product.getTotalPrice()));
+                .replace("$", ""), String.format(Locale.ROOT, "%.02f", product.getTotalPrice()));
 
         return this;
     }
