@@ -3,7 +3,6 @@ package pages.Shipping;
 import configuration.PageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import utils.CRUD.Cart;
 
 public class Shipping extends PageBase {

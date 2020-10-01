@@ -3,7 +3,6 @@ package pages.Address;
 import configuration.PageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import utils.CRUD.User;
 
 public class Address extends PageBase {

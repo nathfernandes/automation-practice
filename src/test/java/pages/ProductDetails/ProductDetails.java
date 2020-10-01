@@ -4,14 +4,12 @@ import configuration.PageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import utils.CRUD.Cart;
 import utils.CRUD.Product;
 import utils.CommonMethods;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ProductDetails extends PageBase {
     private ProductDetailsElements webElements;
